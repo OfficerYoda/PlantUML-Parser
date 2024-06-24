@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7f9961c-fef3-4dfb-8f9f-498d309ba6be" name="Changes" comment="Initial Commit">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Animal.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Bird.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Dog.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Fish.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Person.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,6 +23,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
   <component name="ProjectId" id="2iKhapm6CjQWLwOfduVGqCSYJFG" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -39,6 +38,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "H:/Coding/IntelliJ"
   }
@@ -47,6 +47,14 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\officeryoda\Development\NotUnity\Java\PlantUML-Parser\src\main\kotlin\de\officeryoda\plantuml" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="PlantUML-Parser" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
