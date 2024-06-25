@@ -23,15 +23,15 @@ object PlantUMLParser {
             ).split(" ")
         val modifiers: Set<Modifier> = getModifiers(classModifiers)
 
-        val fields: List<FieldData> = parseFields(classBlock)
-        val methods: List<MethodData> = parseMethods(classBlock)
+        val lines: List<String> = classBlock.split("\n")
+        val fields: List<FieldData> = parseFields(lines)
+        val methods: List<MethodData> = parseMethods(lines)
 
         return ClassData(className, modifiers, fields, methods)
     }
 
-    private fun parseFields(classBlock: String): List<FieldData> {
+    private fun parseFields(lines: List<String>): List<FieldData> {
         val fields: MutableList<FieldData> = mutableListOf()
-        val lines: List<String> = classBlock.split("\n")
 
         for (line: String in lines) {
             var fieldIndex: Int = line.indexOf("val")
@@ -51,8 +51,24 @@ object PlantUMLParser {
         return fields
     }
 
-    private fun parseMethods(classBlock: String): List<MethodData> {
-        return emptyList()
+    private fun parseMethods(lines: List<String>): List<MethodData> {
+        val methods: MutableList<MethodData> = mutableListOf()
+
+        for(line: String in lines) {
+            val methodIndex: Int = line.indexOf("fun")
+            if (methodIndex == -1) continue
+
+            val methodName: String = nextWord(line, methodIndex + 3)
+            val methodModifiers: List<String> = line.substring(0, methodIndex).split(" ")
+            val modifiers: Set<Modifier> = getModifiers(methodModifiers)
+
+            val returnTypeIndex: Int = line.indexOf(":", methodIndex)
+            val returnType: String = if (returnTypeIndex != -1) nextWord(line, returnTypeIndex + 1) else ""
+
+            methods.add(MethodData(methodName, modifiers, returnType, emptyList()))
+        }
+
+        return methods
     }
 
     private fun getModifiers(modifiers: List<String>): Set<Modifier> {
