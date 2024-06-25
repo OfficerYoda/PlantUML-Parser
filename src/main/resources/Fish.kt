@@ -1,9 +1,13 @@
-class Fish(
+private class Fish(
     name: String,
     age: Int,
     val weight: Double,
-): Animal(name, age) {
+) : Animal(name, age) {
     fun swim() {
         println("Swimming")
+    }
+
+    fun drown() {
+        println("Drowning")
     }
 }

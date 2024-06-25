@@ -15,7 +15,7 @@ class Dog(
 class Cat(
     name: String,
     age: Int,
-    var color: String
+    var color: String,
 ) : Animal(name, age) {
     override fun speak() {
         println("Meow!")
