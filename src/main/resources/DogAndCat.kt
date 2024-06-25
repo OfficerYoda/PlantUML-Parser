@@ -1,7 +1,16 @@
 
 enum class PetKindness {
     GoodBoy,
-    PlaningWorldDomination,
+    PlaningWorldDomination;
+
+    fun testKindness(a: Animal): PetKindness {
+        if (a is Dog) {
+            return GoodBoy
+        } else if (a is Cat) {
+            return PlaningWorldDomination
+        }
+        return GoodBoy
+    }
 }
 
 @Pet
@@ -19,6 +28,10 @@ class Dog(
 
     fun fetch() {
         println("Fetching...")
+    }
+
+    fun play(other: Dog) {
+        println("Playing with $other")
     }
 }
 

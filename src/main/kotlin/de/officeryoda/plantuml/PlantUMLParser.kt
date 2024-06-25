@@ -7,20 +7,34 @@ object PlantUMLParser {
     private val DEFAULT_VISIBILITY: Modifier = Modifier.PUBLIC
 
     fun parseKotlinFile(kotlinFile: String): List<ClassData> {
-        val trimmedFile: String = kotlinFile.trim()
+        val data: MutableList<ClassData> = mutableListOf<ClassData>()
+        var trimmedFile: String = kotlinFile.trim()
+        var classRange: Pair<Int, Int>
 
-        trimmedFile.indexOfAny(listOf("class", "interface", "enum", "object"))
+        while (trimmedFile.indexOfAny(listOf("class", "interface", "enum", "object")) != -1) {
+            val classStart: Int = lineStart(trimmedFile, trimmedFile.indexOfAny(listOf("class", "interface", "object")))
+            val classBody: Pair<Int, Int> = nextBlock(trimmedFile)
+            val classBlock: String = trimmedFile.substring(classStart, classBody.second)
 
-        val classStart: Int = lineStart(trimmedFile, trimmedFile.indexOf("class"))
-        val classBody: Pair<Int, Int> = nextBlock(trimmedFile)
-        val classBlock: String = trimmedFile.substring(classStart, classBody.second)
+            data.add(parseClass(classBlock))
 
-        return listOf(parseClass(classBlock))
+            // Remove the class block from the file
+            classRange = nextBlock(trimmedFile, '{', '}')
+            if (classRange.first == -1 || classRange.second + 1 >= trimmedFile.length) break
+            trimmedFile = trimmedFile.substring(classRange.second + 1, trimmedFile.length).trim()
+        }
+
+        return data
     }
 
     private fun parseClass(classBlock: String): ClassData {
+        if(classBlock.isEmpty()) return ClassData("", setOf(), emptyList(), emptyList())
+
         var classIndex: Int = classBlock.indexOfAny(listOf("class", "interface", "object"))
-        classIndex += nextWord(classBlock, classIndex).length // Include the class keyword for potential modifiers (e.g. interface)
+        classIndex += nextWord(
+            classBlock,
+            classIndex
+        ).length // Include the class keyword for potential modifiers (e.g. interface)
 
         val className: String = nextWord(classBlock, classIndex)
         val classModifiers: List<String> =
@@ -64,8 +78,8 @@ object PlantUMLParser {
 
         for (line: String in lines) {
             // If a line only contains one word (the enum value), it is an enum value
-            if (line.trim().split(" ").size == 1) {
-                val value: String = line.trim().removeSuffix(",")
+            if (line.trim().split(" ").size == 1 && !line.contains(Regex("[{}()]"))) {
+                val value: String = line.trim().removeSuffix(",").removeSuffix(";")
                 enumValues.add(FieldData(value, setOf(Modifier.NO_VISIBILITY), ""))
             }
         }
@@ -185,7 +199,8 @@ object PlantUMLParser {
             }
         }
 
-        return Pair(start, end + 1)
+        return if (openBrackets != 0) Pair(-1, -1)
+        else Pair(start, end + 1)
     }
 
     private fun isOpeningBracket(char: Char): Boolean {
