@@ -1,3 +1,9 @@
+
+enum class PetKindness {
+    GoodBoy,
+    PlaningWorldDomination,
+}
+
 @Pet
 class Dog(
     name: String,
@@ -36,9 +42,4 @@ class Cat(
     private fun planWorldDomination() {
         println("Planning world domination...")
     }
-}
-
-enum class PetKindness {
-    GoodBoy,
-    PlaningWorldDomination,
 }

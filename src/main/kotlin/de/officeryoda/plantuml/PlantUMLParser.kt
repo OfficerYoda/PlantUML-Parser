@@ -9,6 +9,8 @@ object PlantUMLParser {
     fun parseKotlinFile(kotlinFile: String): List<ClassData> {
         val trimmedFile: String = kotlinFile.trim()
 
+        trimmedFile.indexOfAny(listOf("class", "interface", "enum", "object"))
+
         val classStart: Int = lineStart(trimmedFile, trimmedFile.indexOf("class"))
         val classBody: Pair<Int, Int> = nextBlock(trimmedFile)
         val classBlock: String = trimmedFile.substring(classStart, classBody.second)
@@ -17,16 +19,20 @@ object PlantUMLParser {
     }
 
     private fun parseClass(classBlock: String): ClassData {
-        val classIndex: Int = classBlock.indexOf("class")
-        val className: String = nextWord(classBlock, classIndex + 5)
+        var classIndex: Int = classBlock.indexOfAny(listOf("class", "interface", "object"))
+        classIndex += nextWord(classBlock, classIndex).length // Include the class keyword for potential modifiers (e.g. interface)
+
+        val className: String = nextWord(classBlock, classIndex)
         val classModifiers: List<String> =
             classBlock.substring(
-                lineStart(classBlock, classIndex), max(0, classIndex - 1)
+                lineStart(classBlock, classIndex), max(0, classIndex)
             ).split(" ")
         val modifiers: Set<Modifier> = getModifiers(classModifiers)
 
         val lines: List<String> = classBlock.split("\n")
-        val fields: List<FieldData> = parseFields(lines)
+        val fields: List<FieldData> =
+            if (modifiers.contains(Modifier.ENUM)) parseEnumValues(lines) // Enums need special handling
+            else parseFields(lines)
         val methods: List<MethodData> = parseMethods(lines)
 
         return ClassData(className, modifiers, fields, methods)
@@ -51,6 +57,20 @@ object PlantUMLParser {
         }
 
         return fields
+    }
+
+    private fun parseEnumValues(lines: List<String>): List<FieldData> {
+        val enumValues: MutableList<FieldData> = mutableListOf()
+
+        for (line: String in lines) {
+            // If a line only contains one word (the enum value), it is an enum value
+            if (line.trim().split(" ").size == 1) {
+                val value: String = line.trim().removeSuffix(",")
+                enumValues.add(FieldData(value, setOf(Modifier.NO_VISIBILITY), ""))
+            }
+        }
+
+        return enumValues
     }
 
     private fun parseMethods(lines: List<String>): List<MethodData> {

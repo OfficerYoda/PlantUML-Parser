@@ -45,4 +45,7 @@ enum class Modifier {
     ANNOTATION,
     DATA,
     OBJECT,
+
+    // Custom
+    NO_VISIBILITY // used for enum values
 }
