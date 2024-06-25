@@ -1,4 +1,3 @@
-
 enum class PetKindness {
     GoodBoy,
     PlaningWorldDomination;
@@ -11,7 +10,7 @@ enum class PetKindness {
         }
         return GoodBoy
     }
-}//
+}
 
 @Pet
 class Dog(
@@ -30,8 +29,8 @@ class Dog(
         println("Fetching...")
     }
 
-    fun play(other: Dog) {
-        println("Playing with $other")
+    fun play(other: Dog, evil: Cat) {
+        println("Playing with $other and the pure evil $evil")
     }
 }
 
@@ -52,7 +51,8 @@ class Cat(
         println("Scratching...")
     }
 
-    private fun planWorldDomination() {
+    private fun planWorldDomination(): String {
         println("Planning world domination...")
+        return "The world is mine!"
     }
 }
