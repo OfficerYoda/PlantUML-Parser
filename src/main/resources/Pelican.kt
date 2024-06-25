@@ -8,7 +8,8 @@ class Pelican(
         println("Pelican noises")
     }
 
-    override fun hunt() {
+    override fun hunt(): Animal {
         println("Pelican hunting")
+        return Fish("Fish", 1, 0.1)
     }
 }
