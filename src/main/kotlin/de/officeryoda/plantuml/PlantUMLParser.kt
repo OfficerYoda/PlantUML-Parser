@@ -5,19 +5,22 @@ object PlantUMLParser {
     private val DEFAULT_VISIBILITY: Modifier = Modifier.PUBLIC
 
     fun parseKotlinFile(kotlinFile: String): String {
-        kotlinFile.trimIndent()
+        val trimmedFile: String = kotlinFile.trim()
 
-        return parseClass(kotlinFile).toString()
+        val classStart: Int = lineStart(trimmedFile, trimmedFile.indexOf("class"))
+        val classBody: Pair<Int, Int> = nextBlock(trimmedFile)
+        val classBlock: String = trimmedFile.substring(classStart, classBody.second)
+
+        return parseClass(classBlock).toString()
     }
 
     private fun parseClass(classBlock: String): ClassData {
         val classIndex: Int = classBlock.indexOf("class")
+        val className: String = nextWord(classBlock, classIndex + 5)
         val classModifiers: List<String> =
             classBlock.substring(
                 lineStart(classBlock, classIndex), classIndex - 1
             ).split(" ")
-
-        val className: String = nextWord(classBlock, classIndex + 5)
         val modifiers: Set<Modifier> = getModifiers(classModifiers)
 
         val fields: List<FieldData> = parseFields(classBlock)
@@ -27,7 +30,25 @@ object PlantUMLParser {
     }
 
     private fun parseFields(classBlock: String): List<FieldData> {
-        return emptyList()
+        val fields: MutableList<FieldData> = mutableListOf()
+        val lines: List<String> = classBlock.split("\n")
+
+        for (line: String in lines) {
+            var fieldIndex: Int = line.indexOf("val")
+            if (fieldIndex == -1) fieldIndex = line.indexOf("var")
+            if (fieldIndex == -1) continue
+
+            val fieldName: String = nextWord(line, fieldIndex + 4)
+            val fieldModifiers: List<String> = line.substring(0, fieldIndex).split(" ")
+            val modifiers: Set<Modifier> = getModifiers(fieldModifiers)
+
+            val typeIndex: Int = line.indexOf(":", fieldIndex)
+            val fieldType: String = if (typeIndex != -1) nextWord(line, typeIndex + 1) else ""
+
+            fields.add(FieldData(fieldName, modifiers, fieldType))
+        }
+
+        return fields
     }
 
     private fun parseMethods(classBlock: String): List<MethodData> {
@@ -42,6 +63,18 @@ object PlantUMLParser {
                 modifierList.add(Modifier.valueOf(modifier.uppercase()))
             } catch (_: Exception) {
             }
+        }
+
+        // Add default visibility if no visibility modifier is present
+        if (modifierList.none {
+                it in setOf(
+                    Modifier.PUBLIC,
+                    Modifier.PRIVATE,
+                    Modifier.PROTECTED,
+                    Modifier.INTERNAL
+                )
+            }) {
+            modifierList.add(DEFAULT_VISIBILITY)
         }
 
         return modifierList
@@ -60,6 +93,8 @@ object PlantUMLParser {
         return DEFAULT_VISIBILITY
     }
 
+    // region =====Util=====
+
     private fun lineStart(code: String, index: Int): Int {
         var start: Int = index
         while (start > 0 && code[start] != '\n') {
@@ -70,11 +105,11 @@ object PlantUMLParser {
 
     private fun nextWord(code: String, start: Int): String {
         var end: Int = start
-        val nonWhitespaceStart: Int = indexOfNonWhitespace(code, start, 1)
+        val nonWhitespaceStart: Int = nextNonWhitespaceIndex(code, start)
 
         for (i: Int in nonWhitespaceStart until code.length) {
             val char: Char = code[i]
-            if (isOpeningBracket(char) || char.isWhitespace()) {
+            if (isOpeningBracket(char) || char.isWhitespace() || char == ':' || char == ',') {
                 end = i
                 break
             }
@@ -83,29 +118,14 @@ object PlantUMLParser {
         return code.substring(nonWhitespaceStart, end)
     }
 
-    private fun previousWord(code: String, end: Int): String {
-        var start = 0
-        val nonWhitespaceEnd: Int = indexOfNonWhitespace(code, end, -1)
-
-        for (i: Int in nonWhitespaceEnd downTo 0) {
-            val char: Char = code[i]
-            if (isClosingBracket(char) || char.isWhitespace()) {
-                start = i
-                break
-            }
-        }
-
-        return code.substring(start, nonWhitespaceEnd + 1)
-    }
-
-    private fun indexOfNonWhitespace(code: String, start: Int, direction: Int): Int {
+    private fun nextNonWhitespaceIndex(code: String, start: Int): Int {
         var index: Int = start
+
         while (index in code.indices) {
-            if (!code[index].isWhitespace()) {
-                return index
-            }
-            index += direction
+            if (!code[index].isWhitespace()) return index
+            else index++
         }
+
         return -1
     }
 
@@ -113,7 +133,7 @@ object PlantUMLParser {
         val start: Int = code.indexOf(openChar)
         var end: Int = code.length - 1
 
-        var openBrackets = 1
+        var openBrackets = 0
 
         for (i: Int in start until code.length) {
             when (code[i]) {
@@ -127,7 +147,7 @@ object PlantUMLParser {
             }
         }
 
-        return Pair(start + 1, end)
+        return Pair(start, end + 1)
     }
 
     private fun isOpeningBracket(char: Char): Boolean {
@@ -137,4 +157,6 @@ object PlantUMLParser {
     private fun isClosingBracket(char: Char): Boolean {
         return char == '}' || char == ')' || char == ']'
     }
+
+    // endregion
 }

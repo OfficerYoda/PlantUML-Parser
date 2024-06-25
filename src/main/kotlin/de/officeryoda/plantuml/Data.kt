@@ -5,7 +5,11 @@ data class ClassData(
     val modifier: Set<Modifier>,
     val fields: List<FieldData>,
     val methods: List<MethodData>,
-)
+) {
+    override fun toString(): String {
+        return "ClassData(name='$name', modifier=$modifier, \n\tfields=$fields, \n\tmethods=$methods)"
+    }
+}
 
 data class FieldData(
     val name: String,
