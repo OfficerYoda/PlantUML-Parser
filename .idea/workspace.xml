@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7f9961c-fef3-4dfb-8f9f-498d309ba6be" name="Changes" comment="A shit ton of Modifiers">
+    <list default="true" id="b7f9961c-fef3-4dfb-8f9f-498d309ba6be" name="Changes" comment="Test">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/de/officeryoda/plantuml/PlantUMLParser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/de/officeryoda/plantuml/PlantUMLParser.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,13 +47,16 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "H:/Coding/IntelliJ",
+    "last_opened_file_path": "C:/Users/officeryoda/Development/NotUnity/Java/PlantUML-Parser/.idea",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\officeryoda\Development\NotUnity\Java\PlantUML-Parser\.idea" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\officeryoda\Development\NotUnity\Java\PlantUML-Parser\src\main\kotlin\de\officeryoda\plantuml" />
     </key>
@@ -166,16 +169,24 @@
       <option name="project" value="LOCAL" />
       <updated>1719326592014</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Test">
+      <option name="closed" value="true" />
+      <created>1719326618951</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1719326618951</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit" />
-    <MESSAGE value="Test" />
     <MESSAGE value="Converting .kt files to String" />
     <MESSAGE value="Added data classes" />
     <MESSAGE value="Basic functions" />
     <MESSAGE value="A shit ton of Modifiers" />
-    <option name="LAST_COMMIT_MESSAGE" value="A shit ton of Modifiers" />
+    <MESSAGE value="Test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test" />
   </component>
 </project>
