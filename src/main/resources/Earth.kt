@@ -1,4 +1,4 @@
-object Earth {
+private object Earth {
 
     private const val radius = 6371 // in km
 

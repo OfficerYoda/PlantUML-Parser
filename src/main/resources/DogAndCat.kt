@@ -29,7 +29,9 @@ class Dog(
         println("Fetching...")
     }
 
-    fun play(other: Dog, evil: Cat) {
+    fun play(
+        other: Dog,
+        evil: Cat) {
         println("Playing with $other and the pure evil $evil")
     }
 }

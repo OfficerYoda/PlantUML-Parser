@@ -1,5 +1,5 @@
 @Pet
-private class Fish(
+class Fish(
     name: String,
     age: Int,
     val weight: Double,

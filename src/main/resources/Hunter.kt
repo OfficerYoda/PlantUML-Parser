@@ -1,3 +1,3 @@
 interface Hunter {
-    fun hunt()
+    fun hunt(): Animal
 }
