@@ -11,7 +11,7 @@ enum class PetKindness {
         }
         return GoodBoy
     }
-}
+}//
 
 @Pet
 class Dog(

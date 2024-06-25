@@ -18,12 +18,13 @@ object PlantUMLGenerator {
             }
 
             for (method: MethodData in classData.methods) {
-                stringBuilder.append("\t${visibilityPrefix(method.modifiers)}${method.name}()")
+                stringBuilder.append("\t${visibilityPrefix(method.modifiers)}${method.name}(")
+                stringBuilder.append(method.parameters.joinToString(", ") + ")")
                 if (method.returnType.isNotEmpty()) stringBuilder.append(": ${method.returnType}")
                 stringBuilder.append("\n")
             }
 
-            stringBuilder.append("}\n")
+            stringBuilder.append("}\n\n")
         }
 
         stringBuilder.append("\n@enduml\n")

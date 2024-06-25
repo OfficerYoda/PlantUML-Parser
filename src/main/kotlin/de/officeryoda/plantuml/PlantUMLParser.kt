@@ -28,7 +28,7 @@ object PlantUMLParser {
     }
 
     private fun parseClass(classBlock: String): ClassData {
-        if(classBlock.isEmpty()) return ClassData("", setOf(), emptyList(), emptyList())
+        if (classBlock.isEmpty()) return ClassData("", setOf(), emptyList(), emptyList())
 
         var classIndex: Int = classBlock.indexOfAny(listOf("class", "interface", "object"))
         classIndex += nextWord(
@@ -78,7 +78,10 @@ object PlantUMLParser {
 
         for (line: String in lines) {
             // If a line only contains one word (the enum value), it is an enum value
-            if (line.trim().split(" ").size == 1 && !line.contains(Regex("[{}()]"))) {
+            if (line.trim().split(" ").size == 1
+                && !line.contains(Regex("[{}()]"))
+                && line.isNotBlank()) {
+
                 val value: String = line.trim().removeSuffix(",").removeSuffix(";")
                 enumValues.add(FieldData(value, setOf(Modifier.NO_VISIBILITY), ""))
             }
@@ -200,7 +203,7 @@ object PlantUMLParser {
         }
 
         return if (openBrackets != 0) Pair(-1, -1)
-        else Pair(start, end + 1)
+        else Pair(start, end)
     }
 
     private fun isOpeningBracket(char: Char): Boolean {

@@ -5,11 +5,7 @@ data class ClassData(
     val modifiers: Set<Modifier>,
     val fields: List<FieldData>,
     val methods: List<MethodData>,
-) {
-    override fun toString(): String {
-        return "ClassData(name='$name', modifiers=$modifiers, \n\tfields=$fields, \n\tmethods=$methods)"
-    }
-}
+)
 
 data class FieldData(
     val name: String,
@@ -21,30 +17,23 @@ data class MethodData(
     val name: String,
     val modifiers: Set<Modifier>,
     val returnType: String,
-    val parameters: List<ParameterData>,
-)
-
-data class ParameterData(
-    val name: String,
-    val type: String,
+    val parameters: List<String>,
 )
 
 enum class Modifier {
-    // General
     PUBLIC,
     PRIVATE,
     PROTECTED,
     INTERNAL,
     STATIC, // not used in kotlin
     OVERRIDE,
-
-    // Class types
     ABSTRACT,
     INTERFACE,
     ENUM,
     ANNOTATION,
     DATA,
     OBJECT,
+    OPERATOR,
 
     // Custom
     NO_VISIBILITY // used for enum values
