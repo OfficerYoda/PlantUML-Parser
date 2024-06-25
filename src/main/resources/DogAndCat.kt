@@ -1,8 +1,12 @@
+@Pet
 class Dog(
     name: String,
     age: Int,
     var breed: String,
 ) : Animal(name, age) {
+
+    val kindness: PetKindness = PetKindness.GoodBoy
+
     override fun speak() {
         println("Woof!")
     }
@@ -12,11 +16,15 @@ class Dog(
     }
 }
 
+@Pet
 class Cat(
     name: String,
     age: Int,
     var color: String,
 ) : Animal(name, age) {
+
+    val kindness: PetKindness = PetKindness.PlaningWorldDomination
+
     override fun speak() {
         println("Meow!")
     }
@@ -28,4 +36,9 @@ class Cat(
     private fun planWorldDomination() {
         println("Planning world domination...")
     }
+}
+
+enum class PetKindness {
+    GoodBoy,
+    PlaningWorldDomination,
 }

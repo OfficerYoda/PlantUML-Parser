@@ -1,12 +1,14 @@
-open class Animal(
+abstract class Animal(
     val name: String,
     var age: Int,
 ) {
 
-    private val size = 20
-    var hunger = 0
+    val size: Int = (Math.random() * 100).toInt()
+    private var hunger = 0
 
-    open fun speak() {
-        println("Animal speaking")
+    abstract fun speak()
+
+    fun eat() {
+        hunger = 0
     }
 }

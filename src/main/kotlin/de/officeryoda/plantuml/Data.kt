@@ -36,9 +36,7 @@ enum class Modifier {
     PROTECTED,
     INTERNAL,
     STATIC, // not used in kotlin
-    FINAL,
-    OPEN,
-    SEALED,
+    OVERRIDE,
 
     // Class types
     ABSTRACT,
@@ -47,9 +45,4 @@ enum class Modifier {
     ANNOTATION,
     DATA,
     OBJECT,
-
-    // Method/Field types
-    SYNCHRONIZED,
-    OVERRIDE,
-    OPERATOR,
 }

@@ -16,7 +16,7 @@ note left of DataClassExample
 end note
 
 class DataClassExample2 <<(D, #00BFFF) data class>> {
-    +property1: String
+    +property1: String <<override>>
     +property2: Int
     +property3: Boolean
 }
@@ -30,6 +30,8 @@ class FinalClass {
 }
 
 class StaticClass {
+    +{static} staticField: String
+    +{static} staticMethod(): void
     +static staticMethod()
 }
 

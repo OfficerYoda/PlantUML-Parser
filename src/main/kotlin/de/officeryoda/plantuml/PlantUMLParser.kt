@@ -1,5 +1,7 @@
 package de.officeryoda.plantuml
 
+import kotlin.math.max
+
 object PlantUMLParser {
 
     private val DEFAULT_VISIBILITY: Modifier = Modifier.PUBLIC
@@ -19,7 +21,7 @@ object PlantUMLParser {
         val className: String = nextWord(classBlock, classIndex + 5)
         val classModifiers: List<String> =
             classBlock.substring(
-                lineStart(classBlock, classIndex), classIndex - 1
+                lineStart(classBlock, classIndex), max(0, classIndex - 1)
             ).split(" ")
         val modifiers: Set<Modifier> = getModifiers(classModifiers)
 
@@ -54,7 +56,7 @@ object PlantUMLParser {
     private fun parseMethods(lines: List<String>): List<MethodData> {
         val methods: MutableList<MethodData> = mutableListOf()
 
-        for(line: String in lines) {
+        for (line: String in lines) {
             val methodIndex: Int = line.indexOf("fun")
             if (methodIndex == -1) continue
 

@@ -1,0 +1,3 @@
+interface Prey {
+    fun flee()
+}
