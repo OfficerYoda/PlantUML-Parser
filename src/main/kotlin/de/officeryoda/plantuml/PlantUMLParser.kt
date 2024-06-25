@@ -2,15 +2,70 @@ package de.officeryoda.plantuml
 
 object PlantUMLParser {
 
+    private val DEFAULT_VISIBILITY: Modifier = Modifier.PUBLIC
+
     fun parseKotlinFile(kotlinFile: String): String {
         kotlinFile.trimIndent()
 
-        val className: String = nextWord(kotlinFile, kotlinFile.indexOf("class") + 5)
-        val classVisibility: String = wordBefore(kotlinFile, kotlinFile.indexOf("class") - 1)
+        return parseClass(kotlinFile).toString()
+    }
 
-        val classBlock: String = getBlock(kotlinFile)
+    private fun parseClass(classBlock: String): ClassData {
+        val classIndex: Int = classBlock.indexOf("class")
+        val classModifiers: List<String> =
+            classBlock.substring(
+                lineStart(classBlock, classIndex), classIndex - 1
+            ).split(" ")
+ 
+        val className: String = nextWord(classBlock, classIndex + 5)
+        val modifiers: Set<Modifier> = getModifiers(classModifiers)
 
-        return "$classVisibility $className \n $classBlock"
+        val fields: List<FieldData> = parseFields(classBlock)
+        val methods: List<MethodData> = parseMethods(classBlock)
+
+        return ClassData(className, modifiers, fields, methods)
+    }
+
+    private fun parseFields(classBlock: String): List<FieldData> {
+        return emptyList()
+    }
+
+    private fun parseMethods(classBlock: String): List<MethodData> {
+        return emptyList()
+    }
+
+    private fun getModifiers(modifiers: List<String>): Set<Modifier> {
+        val modifierList: MutableSet<Modifier> = mutableSetOf()
+
+        for (modifier: String in modifiers) {
+            try {
+                modifierList.add(Modifier.valueOf(modifier.uppercase()))
+            } catch (_: Exception) {
+            }
+        }
+
+        return modifierList
+    }
+
+    private fun getVisibility(modifiers: List<String>): Modifier {
+        for (modifier: String in modifiers) {
+            when (modifier) {
+                "public" -> return Modifier.PUBLIC
+                "private" -> return Modifier.PRIVATE
+                "protected" -> return Modifier.PROTECTED
+                "internal" -> return Modifier.INTERNAL
+            }
+        }
+
+        return DEFAULT_VISIBILITY
+    }
+
+    private fun lineStart(code: String, index: Int): Int {
+        var start: Int = index
+        while (start > 0 && code[start] != '\n') {
+            start--
+        }
+        return start
     }
 
     private fun nextWord(code: String, start: Int): String {
@@ -28,7 +83,7 @@ object PlantUMLParser {
         return code.substring(nonWhitespaceStart, end)
     }
 
-    private fun wordBefore(code: String, end: Int): String {
+    private fun previousWord(code: String, end: Int): String {
         var start = 0
         val nonWhitespaceEnd: Int = indexOfNonWhitespace(code, end, -1)
 
@@ -54,7 +109,7 @@ object PlantUMLParser {
         return -1
     }
 
-    private fun getBlock(code: String, openChar: Char = '{', closeChar: Char = '}'): String {
+    private fun nextBlock(code: String, openChar: Char = '{', closeChar: Char = '}'): Pair<Int, Int> {
         val start: Int = code.indexOf(openChar)
         var end: Int = code.length - 1
 
@@ -72,7 +127,7 @@ object PlantUMLParser {
             }
         }
 
-        return code.substring(start + 1, end)
+        return Pair(start + 1, end)
     }
 
     private fun isOpeningBracket(char: Char): Boolean {

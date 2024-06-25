@@ -1,0 +1,56 @@
+@startuml
+
+class NormalClass {
+	+youCanWriteAnythingHere field String
+	+anythingCanGoHereAsWell method(): void
+}
+
+class DataClassExample {
+    +property1: String
+    +property2: Int
+    +property3: Boolean
+}
+
+note left of DataClassExample
+  <<data class>>
+end note
+
+class DataClassExample2 <<(D, #00BFFF) data class>> {
+    +property1: String
+    +property2: Int
+    +property3: Boolean
+}
+
+abstract class AbstractClass {
+    +abstractMethod()
+}
+
+class FinalClass {
+    +finalMethod()
+}
+
+class StaticClass {
+    +static staticMethod()
+}
+
+interface InterfaceClass {
+    +interfaceMethod()
+}
+
+enum EnumClass {
+    VALUE1
+    VALUE2
+}
+
+annotation AnnotationClass {
+    +annotationMethod()
+}
+
+class SingletonObject <<(S, #FF7700) object>> {
+    +property: String
+    +singletonMethod(): String
+}
+
+DataClassExample -- DataClassExample2
+
+@enduml
