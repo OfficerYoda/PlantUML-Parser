@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7f9961c-fef3-4dfb-8f9f-498d309ba6be" name="Changes" comment="A shit ton of Modifiers">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/de/officeryoda/plantuml/PlantUMLParser.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/de/officeryoda/plantuml/PlantUMLParser.kt" afterDir="false" />
     </list>
@@ -159,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719326560892</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="A shit ton of Modifiers">
+      <option name="closed" value="true" />
+      <created>1719326592014</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1719326592014</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

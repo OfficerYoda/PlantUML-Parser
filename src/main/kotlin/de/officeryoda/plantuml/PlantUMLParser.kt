@@ -16,7 +16,7 @@ object PlantUMLParser {
             classBlock.substring(
                 lineStart(classBlock, classIndex), classIndex - 1
             ).split(" ")
- 
+
         val className: String = nextWord(classBlock, classIndex + 5)
         val modifiers: Set<Modifier> = getModifiers(classModifiers)
 
