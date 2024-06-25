@@ -1,5 +1,7 @@
 package de.officeryoda.plantuml
 
 fun main() {
-    println("Hello World!")
+    // Load the class files from the resource folder as Strings
+    val classFiles: String = ClassLoader.getSystemClassLoader().getResourceAsStream("Fish.kt")!!.bufferedReader().readText()
+    println(classFiles)
 }
