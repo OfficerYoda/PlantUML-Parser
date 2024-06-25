@@ -4,7 +4,7 @@ open class Animal(
 ) {
 
     private val size = 20
-    var hugner = 0
+    var hunger = 0
 
     open fun speak() {
         println("Animal speaking")

@@ -2,24 +2,24 @@ package de.officeryoda.plantuml
 
 data class ClassData(
     val name: String,
-    val modifier: Set<Modifier>,
+    val modifiers: Set<Modifier>,
     val fields: List<FieldData>,
     val methods: List<MethodData>,
 ) {
     override fun toString(): String {
-        return "ClassData(name='$name', modifier=$modifier, \n\tfields=$fields, \n\tmethods=$methods)"
+        return "ClassData(name='$name', modifiers=$modifiers, \n\tfields=$fields, \n\tmethods=$methods)"
     }
 }
 
 data class FieldData(
     val name: String,
-    val modifier: Set<Modifier>,
+    val modifiers: Set<Modifier>,
     val type: String,
 )
 
 data class MethodData(
     val name: String,
-    val modifier: Set<Modifier>,
+    val modifiers: Set<Modifier>,
     val returnType: String,
     val parameters: List<ParameterData>,
 )

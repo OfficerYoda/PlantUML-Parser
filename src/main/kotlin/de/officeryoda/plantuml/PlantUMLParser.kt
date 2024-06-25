@@ -4,14 +4,14 @@ object PlantUMLParser {
 
     private val DEFAULT_VISIBILITY: Modifier = Modifier.PUBLIC
 
-    fun parseKotlinFile(kotlinFile: String): String {
+    fun parseKotlinFile(kotlinFile: String): List<ClassData> {
         val trimmedFile: String = kotlinFile.trim()
 
         val classStart: Int = lineStart(trimmedFile, trimmedFile.indexOf("class"))
         val classBody: Pair<Int, Int> = nextBlock(trimmedFile)
         val classBlock: String = trimmedFile.substring(classStart, classBody.second)
 
-        return parseClass(classBlock).toString()
+        return listOf(parseClass(classBlock))
     }
 
     private fun parseClass(classBlock: String): ClassData {
